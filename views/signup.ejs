@@ -2,30 +2,154 @@
 <html lang="en">
 <head>
     <%- include('./partials/head') %>
-    <title>SignUp</title>
-    
+    <title>Sign Up</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* --- General Body Styles --- */
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #f0f2f5; /* A very light, subtle grey background */
+            color: #343a40;
+            display: flex; /* Use flexbox to center content vertically */
+            flex-direction: column;
+            min-height: 100vh; /* Ensure body takes full viewport height */
+        }
+
+        /* Adjust the main content container */
+        .container {
+            flex-grow: 1; /* Allow container to grow and push footer down */
+            display: flex;
+            align-items: center; /* Center content vertically */
+            justify-content: center; /* Center content horizontally */
+            padding: 2rem; /* Add some padding around the form */
+        }
+
+        /* --- Form Container Styling --- */
+        .auth-form-container {
+            background-color: #ffffff;
+            border-radius: 15px; /* Softer rounded corners */
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); /* Elegant, deeper shadow */
+            padding: 3rem 4rem; /* More generous padding inside the form box */
+            max-width: 500px; /* Limit form width for better aesthetics */
+            width: 100%; /* Ensure it takes full width up to max-width */
+            text-align: center; /* Center text within the form container */
+        }
+
+        /* Form Title */
+        .auth-form-container h2 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            font-size: 2.2rem;
+            color: #212529;
+            margin-bottom: 2rem; /* Space below the title */
+            line-height: 1.2;
+        }
+
+        /* Form Labels */
+        .form-label {
+            font-weight: 600; /* Bolder labels */
+            color: #495057; /* Slightly softer dark color */
+            margin-bottom: 0.5rem;
+            display: block; /* Ensure label takes full width */
+            text-align: left; /* Align labels to the left */
+        }
+
+        /* Form Inputs */
+        .form-control {
+            border-radius: 10px; /* Slightly more rounded inputs */
+            padding: 0.8rem 1rem; /* Comfortable input padding */
+            border: 1px solid #ced4da;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .form-control:focus {
+            border-color: #007bff; /* Primary blue on focus */
+            box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25); /* Subtle focus ring */
+            background-color: #fefefe; /* Slight background change on focus */
+        }
+
+        /* Helper Text */
+        .form-text {
+            font-size: 0.85rem;
+            color: #6c757d;
+            text-align: left; /* Align helper text to the left */
+            margin-top: 0.3rem;
+        }
+
+        /* Submit Button */
+        .btn-primary {
+            background-color: #007bff; /* Primary blue */
+            border-color: #007bff;
+            padding: 0.8rem 2.5rem; /* Generous button padding */
+            border-radius: 50px; /* Pill-shaped button */
+            font-weight: 600; /* Bolder text */
+            font-size: 1.1rem;
+            margin-top: 2rem; /* Space above the button */
+            transition: background-color 0.3s ease-in-out, border-color 0.3s ease-in-out, transform 0.2s ease;
+            box-shadow: 0 4px 10px rgba(0, 123, 255, 0.2); /* Subtle button shadow */
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+            border-color: #004085;
+            transform: translateY(-3px); /* Lift button on hover */
+            box-shadow: 0 6px 15px rgba(0, 123, 255, 0.3); /* Enhanced shadow on hover */
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .auth-form-container {
+                padding: 2.5rem; /* Less padding on smaller screens */
+                border-radius: 10px;
+                box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            }
+            .auth-form-container h2 {
+                font-size: 1.8rem;
+                margin-bottom: 1.5rem;
+            }
+            .btn-primary {
+                padding: 0.7rem 2rem;
+                font-size: 1rem;
+                margin-top: 1.5rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .auth-form-container {
+                padding: 2rem 1.5rem; /* Even less padding on very small screens */
+            }
+            .form-control {
+                padding: 0.7rem 0.8rem;
+            }
+        }
+    </style>
 </head>
 <body>
     <%- include('./partials/nav') %>
 
     <div class="container">
-        <form action="/user/signup" method="post">
-            <div class="mb-3">
-                <label for="fullName" class="form-label mt-4">Full Name</label>
-                <input type="text" class="form-control" name="fullName" id="fullName" aria-describedby="emailHelp">
-              </div>
-            <div class="mb-3">
-              <label for="email" class="form-label mt-4">Email address</label>
-              <input type="email" class="form-control" name="email" id="email"  aria-describedby="emailHelp">
-              <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
-            </div>
-            <div class="mb-3">
-              <label for="password" class="form-label">Password</label>
-              <input type="password" class="form-control" name="password" id="password">
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-          </form>
+        <div class="auth-form-container">
+            <h2>Create Your Blogify Account</h2>
+            <form action="/user/signup" method="post">
+                <div class="mb-3">
+                    <label for="fullName" class="form-label">Full Name</label>
+                    <input type="text" class="form-control" name="fullName" id="fullName" required>
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email address</label>
+                    <input type="email" class="form-control" name="email" id="email" aria-describedby="emailHelp" required>
+                    <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" class="form-control" name="password" id="password" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Sign Up</button>
+            </form>
+        </div>
     </div>
+
     <%- include('./partials/script') %>
 </body>
 </html>

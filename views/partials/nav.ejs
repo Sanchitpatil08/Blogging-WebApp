@@ -1,7 +1,4 @@
-<nav
-  class="navbar navbar-expand-lg bg-body-tertiary bg-dark"
-  data-bs-theme="dark"
->
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
   <div class="container-fluid">
     <a class="navbar-brand" href="/">Blogify</a>
     <button
@@ -16,11 +13,12 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
-      <ul class="navbar-nav">
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="/">Home</a>
         </li>
-        <% if (locals.user) { %>
+
+        <% if (locals.user && locals.user.fullName) { %>
         <li class="nav-item">
           <a class="nav-link" href="/blog/add-new">Add Blog</a>
         </li>
@@ -32,13 +30,13 @@
             data-bs-toggle="dropdown"
             aria-expanded="false"
           >
-          Logged In
+            Hello, <%= locals.user.fullName.split(' ')[0] %>
           </a>
-          <ul class="dropdown-menu">
+          <ul class="dropdown-menu dropdown-menu-end">
             <li><a class="dropdown-item" href="/user/logout">Logout</a></li>
           </ul>
         </li>
-        <% } else {%>
+        <% } else { %>
         <li class="nav-item">
           <a class="nav-link" href="/user/signup">Create Account</a>
         </li>
@@ -56,3 +54,140 @@
   <div class="alert alert-danger" role="alert"><%= locals.error %></div>
 </div>
 <% } %>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Playfair+Display:wght@400;700&display=swap');
+
+  .navbar {
+    background-color: #ffffff;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.07);
+    padding: 1.2rem 2.5rem;
+    transition: all 0.4s ease-in-out;
+    position: sticky;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+  }
+
+  .navbar-brand {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 1.8rem;
+    color: #343a40 !important;
+    letter-spacing: 0.5px;
+    transition: color 0.3s ease-in-out;
+  }
+
+  .navbar-brand:hover {
+    color: #007bff !important;
+  }
+
+  .navbar-toggler {
+    border: none;
+    background-color: transparent;
+  }
+
+  .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%2852, 58, 64, 0.8%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
+  }
+
+  .navbar-toggler:focus {
+    box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25);
+  }
+
+  .navbar-nav .nav-link {
+    font-family: 'Montserrat', sans-serif;
+    color: #555c63 !important;
+    font-weight: 500;
+    padding: 0.7rem 1.2rem;
+    border-radius: 8px;
+    margin-left: 0.5rem;
+    transition: all 0.3s ease-in-out;
+    position: relative;
+  }
+
+  .navbar-nav .nav-link::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 0.3rem;
+    width: 0;
+    height: 2px;
+    background-color: #007bff;
+    transition: width 0.3s ease-in-out, left 0.3s ease-in-out;
+    transform: translateX(-50%);
+  }
+
+  .navbar-nav .nav-link:hover::after,
+  .navbar-nav .nav-link.active::after {
+    width: 80%;
+  }
+
+  .navbar-nav .nav-link:hover,
+  .navbar-nav .nav-link.active {
+    color: #007bff !important;
+    background-color: rgba(0, 123, 255, 0.08);
+  }
+
+  .navbar-nav .dropdown-menu {
+    background-color: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    border-radius: 10px;
+    padding: 0.6rem 0;
+    min-width: 10rem;
+  }
+
+  .navbar-nav .dropdown-item {
+    font-family: 'Montserrat', sans-serif;
+    color: #343a40;
+    padding: 0.75rem 1.5rem;
+    transition: all 0.2s ease-in-out;
+  }
+
+  .navbar-nav .dropdown-item:hover {
+    background-color: #f0f0f0;
+    color: #007bff;
+  }
+
+  @media (max-width: 991.98px) {
+    .navbar {
+      padding: 1rem 1rem;
+      position: static;
+    }
+    .navbar-collapse {
+      margin-top: 1rem;
+      border-top: 1px solid rgba(0, 0, 0, 0.1);
+      padding-top: 0.8rem;
+    }
+    .navbar-nav .nav-item {
+      width: 100%;
+      text-align: center;
+    }
+    .navbar-nav .nav-link {
+      padding: 0.8rem 1rem;
+      margin: 0.2rem 0;
+    }
+    .navbar-nav .nav-link::after {
+      bottom: 0.1rem;
+      height: 1px;
+    }
+    .navbar-nav .dropdown-menu {
+      position: static;
+      width: 100%;
+      border-radius: 0;
+      box-shadow: none;
+      background-color: #f8f9fa;
+      border-top: 1px solid rgba(0, 0, 0, 0.05);
+      padding: 0.5rem 0;
+    }
+    .navbar-nav .dropdown-item {
+      padding: 0.6rem 1.5rem;
+    }
+  }
+
+  .alert {
+    border-radius: 8px;
+    margin-top: 1rem;
+  }
+</style>

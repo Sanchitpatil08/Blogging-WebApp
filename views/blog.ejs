@@ -2,45 +2,238 @@
 <html lang="en">
   <head>
     <%- include('./partials/head') %>
-    <title>Blog</title>
+    <title><%= blog.title %></title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* --- General Body & Page Container Styles --- */
+      body {
+        font-family: 'Montserrat', sans-serif;
+        background-color: #f8f9fa; /* Light background */
+        color: #343a40; /* Standard text color */
+        line-height: 1.7; /* Improved line height for readability */
+      }
+
+      .container.mt-4 {
+        /* Centralize content and add more vertical space */
+        margin-top: 4rem !important;
+        margin-bottom: 4rem !important;
+        background-color: #ffffff; /* White background for content blocks */
+        border-radius: 15px; /* Rounded corners for blocks */
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08); /* Elegant shadow */
+        padding: 2.5rem 3rem; /* Generous padding inside containers */
+        max-width: 900px; /* Max width for comfortable reading */
+      }
+
+      @media (max-width: 768px) {
+        .container.mt-4 {
+          padding: 2rem 1.5rem; /* Adjust padding for smaller screens */
+          margin-top: 2rem !important;
+          margin-bottom: 2rem !important;
+          border-radius: 10px;
+        }
+      }
+
+      /* --- Blog Title --- */
+      h1 {
+        font-family: 'Playfair Display', serif; /* Elegant serif font for titles */
+        font-weight: 700;
+        font-size: 2.8rem; /* Large and impactful title */
+        color: #212529; /* Darker for prominence */
+        margin-bottom: 1.5rem; /* Space below title */
+        line-height: 1.2;
+      }
+
+      @media (max-width: 768px) {
+        h1 {
+          font-size: 2.2rem;
+        }
+      }
+
+      /* --- Cover Image --- */
+      .blog-cover-image {
+        width: 100%; /* Make image responsive */
+        max-height: 500px; /* Max height for aesthetic */
+        object-fit: cover; /* Cover the area, crop if necessary */
+        border-radius: 10px; /* Slightly rounded corners for image */
+        margin-bottom: 2rem; /* Space below image */
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* Subtle shadow for image */
+      }
+
+      /* --- Blog Body Content --- */
+      pre {
+        font-family: 'Montserrat', sans-serif; /* Consistent font */
+        white-space: pre-wrap; /* Preserve formatting but wrap long lines */
+        word-wrap: break-word; /* Break long words */
+        font-size: 1.1rem; /* Comfortable reading size */
+        color: #3f464d; /* Slightly softer text color for body */
+        background-color: #fcfcfc; /* Very light background for pre tag */
+        border: 1px solid #e9ecef; /* Subtle border */
+        border-radius: 8px; /* Rounded corners */
+        padding: 1.5rem; /* Padding inside pre */
+        margin-bottom: 2.5rem; /* Space below body content */
+        line-height: 1.8; /* Enhanced line height for paragraphs */
+      }
+
+      /* --- Author Section --- */
+      .author-section {
+        display: flex; /* Use flexbox for alignment */
+        align-items: center; /* Vertically align items */
+        margin-bottom: 2rem;
+        padding-top: 0; /* Remove top padding if it's the second container */
+        background-color: transparent !important; /* Make author container background transparent */
+        box-shadow: none !important; /* Remove shadow for author container */
+        border-radius: 0 !important; /* Remove border-radius for author container */
+      }
+
+      .author-profile-image {
+        width: 60px; /* Slightly larger profile image */
+        height: 60px;
+        border-radius: 50%; /* Make it perfectly round */
+        object-fit: cover;
+        margin-right: 15px; /* Space between image and name */
+        border: 2px solid #007bff; /* Small border for emphasis */
+        box-shadow: 0 2px 8px rgba(0, 123, 255, 0.2); /* Subtle blue shadow */
+      }
+
+      .author-name {
+        font-weight: 600; /* Bolder name */
+        font-size: 1.15rem; /* Slightly larger name */
+        color: #2c3e50; /* Darker color for author name */
+      }
+
+      /* --- Comments Section --- */
+      .comments-section {
+        padding-top: 2rem; /* Adjust padding for comments section */
+      }
+
+      .comments-section h1 {
+        font-size: 2rem; /* Slightly smaller title for comments */
+        margin-bottom: 1.5rem;
+        color: #343a40;
+      }
+
+      /* Comment Form */
+      .comment-form .mb-3 {
+        display: flex; /* Flexbox for input and button alignment */
+        gap: 0.75rem; /* Space between input and button */
+        align-items: stretch; /* Stretch items to fill height */
+      }
+
+      .comment-form .form-control {
+        border-radius: 25px; /* Pill-shaped input */
+        padding: 0.8rem 1.2rem;
+        flex-grow: 1; /* Input takes up available space */
+        border: 1px solid #ced4da;
+        box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05); /* Subtle inner shadow */
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .comment-form .form-control:focus {
+        border-color: #007bff;
+        box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.08),
+          0 0 0 0.2rem rgba(0, 123, 255, 0.25); /* Focus highlight */
+      }
+
+      .comment-form .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+        padding: 0.8rem 1.8rem; /* Comfortable button padding */
+        border-radius: 25px; /* Pill-shaped button */
+        font-weight: 600;
+        transition: background-color 0.3s ease-in-out,
+          border-color 0.3s ease-in-out, transform 0.2s ease;
+      }
+
+      .comment-form .btn-primary:hover {
+        background-color: #0056b3;
+        border-color: #004085;
+        transform: translateY(-2px); /* Slight lift on hover */
+      }
+
+      /* Individual Comment Styling */
+      .comment-item {
+        display: flex; /* Flexbox for comment structure */
+        align-items: flex-start; /* Align avatar to top of text */
+        margin-bottom: 1.5rem; /* Space between comments */
+        padding: 1rem;
+        background-color: #fefefe; /* Slightly off-white background for comments */
+        border-radius: 10px;
+        border: 1px solid #eceff1; /* Very light border */
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04); /* Subtle shadow */
+      }
+
+      .comment-author-image {
+        width: 45px; /* Slightly smaller for comments */
+        height: 45px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-right: 12px;
+        flex-shrink: 0; /* Prevent image from shrinking */
+      }
+
+      .comment-content-wrapper {
+        flex-grow: 1;
+      }
+
+      .comment-author-name {
+        font-weight: 600;
+        color: #2c3e50;
+        font-size: 1rem;
+        margin-bottom: 0.2rem;
+      }
+
+      .comment-text {
+        font-size: 0.95rem;
+        color: #495057;
+        white-space: pre-wrap; /* Preserve formatting and wrap */
+        word-wrap: break-word;
+        margin-top: 0.4rem;
+        line-height: 1.6;
+      }
+    </style>
   </head>
   <body>
     <%- include('./partials/nav') %>
 
     <div class="container mt-4">
-      <h1><%= blog.title %></h1>
-      <img src="<%= blog.coverImageURL %>" width="700px" />
-      <pre class="mt-3"><%= blog.body %></pre>
+      <h1 class="blog-title"><%= blog.title %></h1>
+      <img src="<%= blog.coverImageURL %>" class="blog-cover-image" alt="Blog Cover" />
+      <pre class="blog-body-content"><%= blog.body %></pre>
     </div>
 
-    <div class="container mt-4">
-      <img src="<%= blog.createdBy.profileImageURl %>" width="50px" /> <%=
-      blog.createdBy.fullName %>
+    <div class="container mt-4 author-section">
+      <img src="<%= blog.createdBy.profileImageURl %>" class="author-profile-image" alt="Author Profile" />
+      <span class="author-name"><%= blog.createdBy.fullName %></span>
     </div>
 
-    <div class="container mt-3">
+    <div class="container mt-4 comments-section">
       <h1>Comments (<%= comments.length %>)</h1>
       <% if (locals.user) { %>
-      <form action="/blog/comment/<%= blog._id %>" method="post">
-        <div class="mb-3">
+      <form action="/blog/comment/<%= blog._id %>" method="post" class="comment-form">
+        <div class="mb-3 d-flex align-items-center">
           <input
             type="text"
             name="content"
             class="form-control"
             placeholder="Enter your comment"
+            required
           />
-          <button class="btn btn-sm btn-primary" type="submit">Add</button>
-        </div>
+          <button class="btn btn-sm btn-primary ms-2" type="submit">Add</button>
+          </div>
       </form>
-       <% } %>
+      <% } %>
 
-       
-      <div class="mt-3">
+      <div class="mt-4">
         <% comments.forEach(comment => { %>
-        <div>
-          <img src="<%= comment.createdBy.profileImageURl %>" width="50px" />
-          <%= comment.createdBy.fullName %>
-          <pre><%= comment.content %></pre>
+        <div class="comment-item">
+          <img src="<%= comment.createdBy.profileImageURl %>" class="comment-author-image" alt="Commenter Profile" />
+          <div class="comment-content-wrapper">
+            <div class="comment-author-name"><%= comment.createdBy.fullName %></div>
+            <pre class="comment-text"><%= comment.content %></pre>
+          </div>
         </div>
         <% }) %>
       </div>

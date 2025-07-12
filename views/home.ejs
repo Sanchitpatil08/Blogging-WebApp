@@ -3,6 +3,121 @@
   <head>
     <%- include('./partials/head') %>
     <title>Homepage</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* General Body Styles */
+      body {
+        font-family: 'Montserrat', sans-serif; /* Modern, clean font */
+        background-color: #f8f9fa; /* Light background for elegance */
+        color: #343a40; /* Darker text for readability */
+      }
+
+      /* Container Spacing */
+      .container.mt-3 {
+        margin-top: 3rem !important; /* More generous top margin */
+      }
+
+      /* Card Styling */
+      .card {
+        border: none; /* Remove default border */
+        border-radius: 15px; /* Softer, rounded corners */
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08); /* Elegant shadow for depth */
+        transition: transform 0.3s ease-in-out,
+          box-shadow 0.3s ease-in-out; /* Smooth hover effects */
+        overflow: hidden; /* Ensures image corners match card */
+        margin-bottom: 2rem; /* Space between cards */
+      }
+
+      .card:hover {
+        transform: translateY(-5px); /* Slight lift on hover */
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12); /* Enhanced shadow on hover */
+      }
+
+      /* Card Image */
+      .card-img-top {
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+        height: 200px; /* Fixed height for consistent card appearance */
+        object-fit: cover; /* Ensures image covers the area without distortion */
+      }
+
+      /* Card Body */
+      .card-body {
+        padding: 1.5rem; /* More padding inside the card body */
+      }
+
+      /* Card Title */
+      .card-title {
+        font-size: 1.35rem; /* Slightly larger title */
+        font-weight: 700; /* Bolder title */
+        color: #212529; /* Even darker for prominence */
+        margin-bottom: 0.75rem; /* Space below title */
+      }
+
+      /* View Button */
+      .btn-primary {
+        background-color: #007bff; /* Bootstrap primary blue */
+        border-color: #007bff;
+        padding: 0.6rem 1.5rem; /* More comfortable button padding */
+        border-radius: 50px; /* Pill-shaped button */
+        font-weight: 600; /* Bolder text for the button */
+        transition: background-color 0.3s ease-in-out,
+          border-color 0.3s ease-in-out;
+      }
+
+      .btn-primary:hover {
+        background-color: #0056b3; /* Darker blue on hover */
+        border-color: #004085;
+      }
+
+      /* Responsive Grid for Cards */
+      .row-cols-4 {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); /* Flexible grid for responsiveness */
+        gap: 2rem; /* Space between grid items */
+        justify-content: center; /* Center cards in the grid */
+      }
+
+      /* Adjustments for smaller screens */
+      @media (max-width: 1200px) {
+        .row-cols-4 {
+          grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        }
+      }
+
+      @media (max-width: 992px) {
+        .row-cols-4 {
+          grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        }
+      }
+
+      @media (max-width: 768px) {
+        .row-cols-4 {
+          grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); /* Single column on small screens */
+          padding: 0 1rem; /* Add some horizontal padding */
+        }
+        .card {
+          margin-left: auto;
+          margin-right: auto; /* Center individual cards */
+          max-width: 350px; /* Max width for cards on small screens */
+        }
+      }
+
+      @media (max-width: 576px) {
+        .card {
+          max-width: 90%; /* Adjust for very small screens */
+        }
+        .card-img-top {
+          height: 180px;
+        }
+        .card-title {
+          font-size: 1.2rem;
+        }
+      }
+    </style>
   </head>
   <body>
     <%- include('./partials/nav') %>
